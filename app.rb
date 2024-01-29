@@ -14,6 +14,21 @@ require 'sinatra/reloader'
 #6. Lägg till felhantering (meddelande om man skriver in fel user/lösen)
 enable :sessions
 
+def connect_to_db(path)
+    db = SQLite3::Database.new(path)
+    db.results_as_hash = true
+    return db
+   end
+
+def list
+   db = SQLite3::Database.new('db/onepiece.db')
+   db.results_as_hash = true
+   result = db.execute("SELECT name FROM Characters")
+   return result
+ 
+end
+
+
 
 get('/') do
   slim(:register)
@@ -33,7 +48,7 @@ post('/login') do
   db = SQLite3::Database.new('db/onepiece.db')
   db.results_as_hash = true
   result = db.execute("SELECT * FROM users WHERE user_name =? OR user_mail=? ",username,email).first
-  pwdigest= result["pwdigest"]
+  pwdigest= result["user_pwd"]
   id= result["id"]
 
   if BCrypt::Password.new(pwdigest) == password
@@ -50,9 +65,14 @@ get('/todos') do
   id = session[:id].to_i
   db = SQLite3::Database.new('db/onepiece.db')
   db.results_as_hash = true
-  result = db.execute("SELECT * FROM characters WHERE user_id = ?",id)
+  result = db.execute("SELECT name FROM Characters")
   p   "alla todos från result #{result}"
   slim(:"todos/index", locals:{todos:result})
+end
+
+
+get('/showlogout') do 
+    slim(:logout)
 end
 
 post("/users/new") do
@@ -64,7 +84,7 @@ post("/users/new") do
   if (password == password_confirm)
     password_digest= BCrypt::Password.create(password)
     db = SQLite3::Database.new('db/onepiece.db')
-    db.execute("INSERT INTO users (user_name,user_pwd,user_mail) VALUES(?,?)",username,password_digest,email)
+    db.execute("INSERT INTO users (user_name,user_pwd,user_mail) VALUES(?,?,?)",username,password_digest,email)
     redirect('/')
 
   else
