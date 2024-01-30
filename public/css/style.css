@@ -100,3 +100,14 @@ header{
   color: #162938;
 
 }
+
+
+.wrapper{
+  position: relative;
+  width: 400px;
+  height: 440px;
+  background: transparent;
+  border: 2px solid rgb(225, 255, 255,.5);
+
+
+}
