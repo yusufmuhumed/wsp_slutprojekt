@@ -16,7 +16,7 @@ body{
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-image: url('background.gif');
+  background-image: url('background.gif'); 
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -53,6 +53,7 @@ header{
   text-decoration: none;
   font-weight: 500;
   margin-left: 40px;
+  margin-top: 100px;
 
 }
 
@@ -89,7 +90,7 @@ header{
   font-size: 1.1em;
   color: #fff;
   font-weight: 500;
-  margin: 40px;
+  margin: 20px;
   transition: .5s;
 
 
@@ -148,7 +149,7 @@ header{
 
 .form-box h2{
   font-size: 2em;
-  color: #162938;
+  color: #000000;
   text-align: center;
 }
 
@@ -156,10 +157,12 @@ header{
   position: relative;
   width: 100%;
   height: 50px;
-  border-bottom: 2px solid #162938;
+  border-bottom: 2px solid #000000;
   margin: 30px 0 ;
 
 }
+
+
 
 .input-box label{
   position: absolute;
@@ -167,11 +170,11 @@ header{
   left: 5px;
   transform: translateY(-50%);
   font-size: 1em;
-  color: #162938;
+  color: #000000;
   font-weight: 500;
   pointer-events: none;
   transition: .5s;
-
+  
 }
 
 .input-box input:focus~label,
@@ -202,7 +205,7 @@ header{
 
 .remember-forgot{
   font-size: .9em;
-  color: #162938;
+  color: #000000;
   font-weight: 500;
   margin: -15px 0 15px;
   display: flex;
@@ -230,7 +233,7 @@ header{
 .btn{
   width: 100%;
   height: 45px;
-  background: #162938;
+  background: #000000;
   border: none;
   outline: none;
   border-radius: 6px;
@@ -242,14 +245,14 @@ header{
 
 .login-register{
   font-size: .9em;
-  color: #162938;
+  color: #000000;
   text-align: center;
   font-weight: 500;
   margin: 25px 0 10px;
 }
 
 .login-register p a {
-  color: #162938;
+  color: #000000;
   text-decoration: none;
   font-weight: 600;
 
@@ -260,5 +263,22 @@ header{
 }
 
 
+#accountSymbol {
+  display: none;
+}
+
+/* Add some styling for a better visual appearance */
+#loginButton,
+#accountSymbol {
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#loginButton:hover,
+#accountSymbol:hover {
+  background-color: #555;
+}
 
 
