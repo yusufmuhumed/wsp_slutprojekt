@@ -3,6 +3,7 @@ require 'slim'
 require 'sqlite3'
 require 'bcrypt'
 require 'sinatra/reloader'
+require_relative 'model.rb'
 
 #1. Skapa ER + databas som kan hålla användare och todos. Fota ER-diagram, 
 #   lägg i misc-mapp
@@ -14,19 +15,6 @@ require 'sinatra/reloader'
 #6. Lägg till felhantering (meddelande om man skriver in fel user/lösen)
 enable :sessions
 
-def connect_to_db(path)
-    db = SQLite3::Database.new(path)
-    db.results_as_hash = true
-    return db
-   end
-
-def list
-   db = SQLite3::Database.new('db/onepiece.db')
-   db.results_as_hash = true
-   result = db.execute("SELECT name FROM Characters")
-   return result
- 
-end
 
 
 

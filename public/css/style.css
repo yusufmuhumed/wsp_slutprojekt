@@ -11,7 +11,7 @@
 
 
 
-body{
+#login-body{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,6 +24,10 @@ body{
 
 
 }
+
+
+
+
 header{
   position: fixed;
   top: 0;
@@ -282,3 +286,72 @@ header{
 }
 
 
+.link-box{
+  width: 400px;
+  height: 500px;
+  margin: 30px;
+  position: relative;
+  border: 2px solid rgb(225, 255, 255,.5);
+  border-radius: 10px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 30px rgba(0,0,0,.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.link-info-box{
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: 400px;
+  height: 200px;
+  border: 2px solid rgb(225, 255, 255,.5);
+  border-radius: 0 0 10px 10px;
+  transition: .5s;
+}
+
+.link-info-box:hover{
+}
+
+.link-img-box{
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  width: 400px;
+  height: 300px;
+  border-radius: 10px 10px 0 0;
+  border: 2px solid rgb(225, 255, 255,.5);
+
+}
+
+.link-info-box h2{
+  margin-left: 10px;
+  margin-top: 10px;
+} 
+
+.link-info-box p{
+  margin: 10px;
+  
+}
+
+
+.links-home{
+  text-decoration: none;
+  color: #fff;
+}
+
+.link-img-box img{
+  width:400px;
+}
+
+
+.link-img{
+  width: 300px;
+  height: 300px;
+  border-radius: 10px 10px 0 0;
+}
