@@ -1,0 +1,18 @@
+h2 Every One piece character 
+a href="/showlogout" Logout
+
+main class="main_list"
+    - characters.each do |character|
+        li class="list_character"
+        a class="link-characters" href="access/#{character['id']}" #{character['name']} 
+        div 
+            p 1
+        form class="like-form" action="access/#{character['id']}/delete" method="post" 
+            input type="submit" value="Like"
+    
+    
+
+
+
+
+

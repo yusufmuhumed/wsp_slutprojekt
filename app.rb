@@ -41,7 +41,7 @@ post('/login') do
 
   if BCrypt::Password.new(pwdigest) == password
     session[:id] = id
-    redirect('/todos')
+    redirect('/access')
   else
     "fel lösenord"
   end
@@ -49,14 +49,16 @@ post('/login') do
 
 end
 
-get('/todos') do 
+get('/access') do 
   id = session[:id].to_i
   db = SQLite3::Database.new('db/onepiece.db')
   db.results_as_hash = true
   result = db.execute("SELECT name FROM Characters")
   p   "alla todos från result #{result}"
-  slim(:"todos/index", locals:{todos:result})
+  slim(:"access/index", locals:{access:result})
 end
+
+
 
 
 get('/showlogout') do 
@@ -79,4 +81,16 @@ post("/users/new") do
     "fel lösenord"
     
   end
+end
+
+
+
+
+get('/access/ranks') do
+  db = SQLite3::Database.new('db/onepiece.db')
+  db.results_as_hash = true
+  result = db.execute("SELECT name FROM Characters")
+  #result2 = db.execute("SELECT likes FROM Characters")
+  slim(:"access/ranks", locals:{characters:result})
+
 end
