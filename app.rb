@@ -84,7 +84,7 @@ end
 get('/access/ranks') do
   db = SQLite3::Database.new('db/onepiece.db')
   db.results_as_hash = true
-  result = db.execute("SELECT name FROM Characters")
+  result = db.execute("SELECT * FROM Characters")
   #result2 = db.execute("SELECT likes FROM Characters")
   slim(:"access/ranks", locals:{characters:result})
 

@@ -5,12 +5,16 @@ main class="main_list"
     
     - characters.each do |character|
         div class="characters-container"
+            div class="char-img-box"
+                img class="char-img" src="/img/one_piece_images/#{character['name']}.jpg"  
+
             li class="list_character"
-                a href="/access/#{character['id']}" #{character['name']} 
-                div 
-                    p = character['id']
-                form class="like-form" action="access/#{character['id']}/like" method="post" 
-                    input type="submit" value="Like"
+                div class="d"
+                    a href="/access/#{character['id']}" #{character['name']} 
+                    div 
+                        p = character['id']
+                    form class="like-form" action="access/#{character['id']}/like" method="post" 
+                        input type="submit" value="Like"
             
     
 
