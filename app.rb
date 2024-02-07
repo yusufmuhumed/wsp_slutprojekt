@@ -50,12 +50,7 @@ post('/login') do
 end
 
 get('/access') do 
-  id = session[:id].to_i
-  db = SQLite3::Database.new('db/onepiece.db')
-  db.results_as_hash = true
-  result = db.execute("SELECT name FROM Characters")
-  p   "alla todos från result #{result}"
-  slim(:"access/index", locals:{access:result})
+  slim(:"access/index")
 end
 
 
@@ -93,4 +88,15 @@ get('/access/ranks') do
   #result2 = db.execute("SELECT likes FROM Characters")
   slim(:"access/ranks", locals:{characters:result})
 
+end
+
+
+get('/access/:id') do
+  id = params[:id].to_i
+  db = SQLite3::Database.new("db/onepiece.db")
+  db.results_as_hash = true
+  result = db.execute("SELECT * FROM Characters WHERE id = ?",id).first
+  #result2 = db.execute("SELECT Name FROM artists WHERE ArtistID IN (SELECT ArtistId FROM albums WHERE AlbumId = ?)",id).first
+  p "resultatet är: #{result}"
+  slim(:"access/show",locals:{result:result})
 end

@@ -28,19 +28,29 @@
 
 
 
-header{
+.header{
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   padding: 20px 100px;
-
+  background-color: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 99;
+  z-index: 1000;
+  height: auto;
+  transition: all 0.2s ease-in-out;
 }
 
+.header:hover{
+  background-color: #41aeb6;
+}
+
+.header.is-sticky {
+  background-color: black;
+
+}
 
 .logo{
   font-size: 2em;
@@ -62,6 +72,8 @@ header{
 }
 
 
+
+
 .navigation a::after {
   content: '';
   position: absolute;
@@ -76,6 +88,8 @@ header{
   transition: transform .5s;
 }
 
+
+
 .navigation a:hover::after {
   transform: scaleX(1);
   transform-origin: left;
@@ -83,8 +97,10 @@ header{
 
 
 
+
+
 .navigation .btnLogin-popup{
-  width: 130px;
+  width: 100px;
   height: 50px;
   background: transparent;
   border: 2px solid #fff;
@@ -94,7 +110,6 @@ header{
   font-size: 1.1em;
   color: #fff;
   font-weight: 500;
-  margin: 20px;
   transition: .5s;
 
 
@@ -105,6 +120,8 @@ header{
   color: #000000;
 
 }
+
+
 
 
 .wrapper{
@@ -391,4 +408,35 @@ header{
  .like-form .link-characters {
   display:inline-block;
   margin:10px;
+}
+
+
+.character-box{
+  margin: 10px;
+}
+
+
+.main_list{
+  width: auto;
+  height: fit-content;
+  flex-wrap: wrap;
+  margin: 20px;
+}
+
+.characters-container{
+  width: 200px;
+  height: 200px;
+  border-radius: 5px;
+  background-color: aqua;
+  margin: 20px;
+
+}
+
+.list_character{
+  list-style-type: none;
+}
+
+.list_character a{
+  text-decoration: none;
+  color: #000000;
 }

@@ -1,18 +1,20 @@
 h2 Every One piece character 
-a href="/showlogout" Logout
+
 
 main class="main_list"
+    
     - characters.each do |character|
-        li class="list_character"
-        a class="link-characters" href="access/#{character['id']}" #{character['name']} 
-        div 
-            p 1
-        form class="like-form" action="access/#{character['id']}/delete" method="post" 
-            input type="submit" value="Like"
+        div class="characters-container"
+            li class="list_character"
+                a href="/access/#{character['id']}" #{character['name']} 
+                div 
+                    p = character['id']
+                form class="like-form" action="access/#{character['id']}/like" method="post" 
+                    input type="submit" value="Like"
+            
     
-    
 
 
 
-
+/ #{character['id']}
 
