@@ -53,11 +53,18 @@
 }
 
 .logo{
+  width: 150px;
+  height: fit-content;
+
+}
+
+.logo_text{
   font-size: 2em;
   color: #fff;
   user-select: none;
 
 }
+
 
 
 .navigation a {
@@ -401,10 +408,7 @@
 
 
 
-.main_list{
-  display: flex;
- 
-}
+
  .like-form .link-characters {
   display:inline-block;
   margin:10px;
@@ -417,10 +421,10 @@
 
 
 .main_list{
+  display: flex;
   width: auto;
   height: fit-content;
   flex-wrap: wrap;
-  margin: 20px;
   background-color: rgba(31,123,224,255);
 }
 
@@ -429,7 +433,8 @@
   height: 300px;
   border-radius: 5px;
   background-color: aqua;
-  margin: 20px;
+  margin-top: 20px;
+  margin:25px;
   display: flex;
   flex-wrap: wrap;
 }
@@ -457,6 +462,119 @@
 .char-img{
   width: 48px;
   height: 48px;
-  border-radius: 1px;
+  border-radius: 5px;
   
+}
+
+
+.above-cards{
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.above-cards h2{
+  margin-top: 50px;
+}
+
+.above-cards p{
+  text-align: center;
+  margin-top: -50px;
+}
+
+
+.search-wrapper{
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-image: url('background.jpg'); 
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 30px;
+  
+  
+
+  
+}
+
+
+.search-box{
+  width: 300px;
+  height: 200px;
+  background: transparent;
+  border: 2px solid rgb(225, 255, 255,.5);
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 30px rgba(0,0,0,.5);
+  display: flex;
+  align-items: center;
+  padding-left: 20px ;
+  order: 1;
+}
+
+
+
+
+
+
+.info-box{
+  background-color: rgba(0, 255, 225, 0.433);
+  border: 2px solid rgba(249, 255, 225, 0.5);
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 30px rgba(0,0,0,.5);
+  width: 500px;
+  height: 150px;
+  color: #000000;
+  order: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-weight: 400;
+  transition: 0.5s;
+
+}
+.info-box h2{
+  margin-top: 5px;
+}
+.info-box:hover{
+  background-color: rgb(0, 187, 255);
+}
+
+.info-box p{
+  margin-top: 10px;
+}
+
+.logged-out-wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-image: url('background.jpg'); 
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.logged-out-box{
+  width: 250px;
+  height: 125px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  border: 2px solid rgb(225, 255, 255,.5);
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 30px rgba(0,0,0,.5);
+  padding: 20px;
+}
+
+.logged-out-box h2{
+  font-size: 14px;
 }

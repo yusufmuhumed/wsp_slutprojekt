@@ -5,31 +5,24 @@ require 'bcrypt'
 require 'sinatra/reloader'
 require_relative 'model.rb'
 
-#1. Skapa ER + databas som kan hålla användare och todos. Fota ER-diagram, 
-#   lägg i misc-mapp
-#2. Skapa ett formulär för att registrerara användare.
-#3. Skapa ett formulär för att logga in. Om användaren lyckas logga  
-#   in: Spara information i session som håller koll på att användaren är inloggad
-#4. Låt inloggad användare skapa todos i ett formulär (på en ny sida ELLER på sidan som visar todos.).
-#5. Låt inloggad användare updatera och ta bort sina formulär.
-#6. Lägg till felhantering (meddelande om man skriver in fel user/lösen)
+
 enable :sessions
 
 
 
 
 get('/') do
-  slim(:register)
+  slim(:"locked/new")
 end
 
 
 get('/showlogin') do
-  slim(:login)
+  slim(:"locked/login")
 end
 
 
 
-post('/login') do
+post('/locked/login') do
   username = params[:username]
   password = params[:password]
   email = params[:email]
@@ -60,7 +53,7 @@ get('/showlogout') do
     slim(:logout)
 end
 
-post("/users/new") do
+post("/locked/new") do
  username= params[:username]
  password= params[:password]
  email= params[:email]
@@ -70,7 +63,7 @@ post("/users/new") do
     password_digest= BCrypt::Password.create(password)
     db = SQLite3::Database.new('db/onepiece.db')
     db.execute("INSERT INTO users (user_name,user_pwd,user_mail) VALUES(?,?,?)",username,password_digest,email)
-    redirect('/')
+    redirect('/access')
 
   else
     "fel lösenord"
@@ -81,22 +74,37 @@ end
 
 
 
-get('/access/ranks') do
+get('/ranks/index') do
   db = SQLite3::Database.new('db/onepiece.db')
   db.results_as_hash = true
   result = db.execute("SELECT * FROM Characters")
   #result2 = db.execute("SELECT likes FROM Characters")
-  slim(:"access/ranks", locals:{characters:result})
+  slim(:"ranks/index", locals:{characters:result})
 
 end
 
 
-get('/access/:id') do
+get('/ranks/:id') do
   id = params[:id].to_i
   db = SQLite3::Database.new("db/onepiece.db")
   db.results_as_hash = true
   result = db.execute("SELECT * FROM Characters WHERE id = ?",id).first
   #result2 = db.execute("SELECT Name FROM artists WHERE ArtistID IN (SELECT ArtistId FROM albums WHERE AlbumId = ?)",id).first
   p "resultatet är: #{result}"
-  slim(:"access/show",locals:{result:result})
+  slim(:"ranks/show",locals:{result:result})
 end
+
+
+get('/search/index') do
+  slim(:"search/index")
+end
+
+
+
+
+# post('/access/search') do
+  
+
+# end
+
+

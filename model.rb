@@ -4,11 +4,15 @@ def connect_to_db(path)
     return db
    end
 
-def list
+def list_name()
    db = SQLite3::Database.new('db/onepiece.db')
    db.results_as_hash = true
    result = db.execute("SELECT name FROM Characters")
    return result
  
 end
+
+
+
+
 
