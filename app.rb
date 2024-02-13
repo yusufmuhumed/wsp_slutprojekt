@@ -86,6 +86,7 @@ end
 
 get('/ranks/:id') do
   id = params[:id].to_i
+  p id
   db = SQLite3::Database.new("db/onepiece.db")
   db.results_as_hash = true
   result = db.execute("SELECT * FROM Characters WHERE id = ?",id).first
@@ -94,17 +95,43 @@ get('/ranks/:id') do
   slim(:"ranks/show",locals:{result:result})
 end
 
+get('/search/start') do
+  slim(:'search/start')
+end
+
+post('/search/start') do
+  name= params[:name]
+  db = SQLite3::Database.new('db/onepiece.db')
+  db.results_as_hash = true
+  result = db.execute("SELECT * FROM Characters WHERE name = ?",name)
+  session[:search_results] = result
+  redirect(:"search/index")
+end
+
 
 get('/search/index') do
-  slim(:"search/index")
+  results= session.delete(:search_results)
+  p results
+
+  
+  
+  slim(:"search/index",locals:{results:results})
+
+end
+
+get('/search/:name') do
+  name=params[:name]
+  db = SQLite3::Database.new("db/onepiece.db")
+  db.results_as_hash = true
+  result = db.execute("SELECT * FROM Characters WHERE name = ?",name).first
+  
+
+  slim(:"search/show",locals:{result:result})
 end
 
 
 
 
-# post('/access/search') do
-  
 
-# end
 
 

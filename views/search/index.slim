@@ -1,11 +1,17 @@
-div class="search-wrapper"
-    div class="info-box"
-        h2 One piece database
-        p search for intresting one piece characters using anything from first chapter apperance,episode apperance or debut year as search factors
-    div class="search-box"
-        form action="/access/search" class="form-search"
-            div class="input-box"
-                span class="icon"
-                    <ion-icon name="search-outline"></ion-icon>
-                input type="search" name="Search-Characters"/ 
-                label Search for Characters   
+- if results.empty?
+  p No results found
+- else
+  ul
+    - results.each do |result|
+      div class="characters-container"
+            div class="char-img-box"
+                img class="char-img" src="/img/one_piece_images/#{results[0]['name']}.jpg"  
+            li class="list_character"
+                div class="d"
+                    a href="/search/#{results[0]["name"]}" #{results[0]["name"]} 
+
+
+
+                    
+
+      

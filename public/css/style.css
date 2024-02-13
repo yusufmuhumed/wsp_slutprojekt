@@ -578,3 +578,104 @@
 .logged-out-box h2{
   font-size: 14px;
 }
+
+
+
+.character_show_container {
+  display: grid;
+  grid-template-columns: 8% 1fr 8%;
+  grid-template-rows: 442px 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+      "background_img background_img background_img"
+      ". content .";
+
+}
+
+
+.character_show_container .background_img {
+  grid-area: background_img;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-position: center center;
+  -moz-filter: blur(8px);
+  -webkit-filter: blur(8px);
+  filter: blur(8px);
+  transform: scale(1.1);
+  background-image: url(background.jpg);
+
+}
+
+.character-content{
+  
+  display: grid;
+  grid-template-columns: 18rem 1.7fr 18rem;
+  grid-template-rows: 18rem 500px auto auto;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+      "img_cover game_content_header game_content_header"
+      "game_content_body game_content_body game_content_body"
+      "game_content_body game_content_body game_content_body"
+      "game_review game_review game_review";
+  grid-area: content;
+  position: relative;
+  z-index: 1;
+  margin-top: -16.6rem;
+}
+
+.img_cover{
+  
+  grid-area: img_cover;
+  width: 264px;
+  height: 352px;
+  object-fit: cover;
+  z-index: 3;
+
+}
+
+.character_content_header{
+  
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto minmax(20px, 50px) minmax(20px, 50px) minmax(20px, 50px);
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+      "game_title game_title game_title"
+      "game_realse_date game_realse_date game_realse_date"
+      "game_genre game_genre game_genre"
+      "game_platform game_platform game_platform";
+  grid-area: game_content_header;
+  text-shadow: 1px 2px 5px rgb(226, 226, 226);
+}
+
+.character_name{
+  
+  grid-area: game_title;
+  font-size: calc(3.5rem + 0.3vw);
+  font-weight: bold;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+
+.character_crew{
+  font-size: calc(1.5rem + 0.3vw);
+  grid-area: game_realse_date;
+}
+
+.character_year{
+  font-size: calc(1.5rem + 0.3vw);
+  grid-area: game_genre;
+
+}
+
+
+
+.character-content-body{
+  
+}
