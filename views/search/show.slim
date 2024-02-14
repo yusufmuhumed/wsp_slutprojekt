@@ -1,6 +1,6 @@
 
 div class="character_show_container"
-    section class="background_img"
+    div class="background_img"
 
     div class="character-content"
         img class="img_cover" src="/img/one_piece_images/#{result['name']}.jpg" alt="charcter image"
@@ -11,6 +11,12 @@ div class="character_show_container"
                 h3 = "Crew : Whitebeard pirates"
             div class="character_year"
                 p first apperance #{result['year']}
+            div class="character_bounty"
+                -if result['Bounty'].nil?
+                    h2 No bounty 
+                -else
+                    h2 #{result['Bounty']}
+                
 
     div class="character-content-body"
         h2 Key Notes:

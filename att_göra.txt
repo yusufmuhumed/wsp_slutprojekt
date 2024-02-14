@@ -1,0 +1,20 @@
+webbserver checklista
+
+like system 
+
+list maker 
+	skapa flera listor
+	ta bort och edit listor
+
+
+admin system 
+	lägg till karaktärer
+	ta bort karaktärer
+	edit karaktärer (kanske)
+
+
+filler sidor t.ex About Services och Log out
+
+
+Bonus 
+	filter options 
