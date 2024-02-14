@@ -1,6 +1,7 @@
 section  class="above-cards"
-    h2 Every One piece character 
-    p Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero, laudantium perspiciatis esse nesciunt illo earum ea deserunt quas sapiente perferendis reiciendis itaque doloribus? Minus, voluptatibus quidem adipisci dolore ea doloremque?
+    div class="text-box-cards"
+        h2 Every One piece character 
+        p Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero, laudantium perspiciatis esse nesciunt illo earum ea deserunt quas sapiente perferendis reiciendis itaque doloribus? Minus, voluptatibus quidem adipisci dolore ea doloremque?
 
 
 main class="main_list"
@@ -14,7 +15,7 @@ main class="main_list"
                 div class="d"
                     a href="/ranks/#{character['id']}" #{character['name']} 
                     div 
-                        p = character['id']
-                    form class="like-form" action="ranks/#{character['id']}/like" method="post" 
+                        p = character['likes']
+                    form class="like-form" action="/#{character['id']}/likes" method="post" 
                         input type="submit" value="Like"
             

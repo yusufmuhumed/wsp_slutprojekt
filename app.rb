@@ -95,6 +95,19 @@ get('/ranks/:id') do
   slim(:"ranks/show",locals:{result:result})
 end
 
+
+
+
+post('/:id/likes') do
+  id = params[:id].to_i
+  p id
+  db = SQLite3::Database.new("db/onepiece.db")
+  db.results_as_hash = true
+  db.execute("UPDATE characters SET likes = likes + 1 WHERE id = ?", id)
+  redirect(:'/ranks/index')
+
+end
+
 get('/search/start') do
   slim(:'search/start')
 end
