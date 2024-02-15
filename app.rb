@@ -77,7 +77,9 @@ end
 get('/ranks/index') do
   db = SQLite3::Database.new('db/onepiece.db')
   db.results_as_hash = true
-  result = db.execute("SELECT * FROM Characters")
+  result = db.execute("SELECT * FROM Characters ORDER BY likes DESC")
+  @characters_likes = db.execute("SELECT * FROM Characters")
+  @liked_characters = session[:liked_characters] || []
   #result2 = db.execute("SELECT likes FROM Characters")
   slim(:"ranks/index", locals:{characters:result})
 
@@ -104,6 +106,8 @@ post('/:id/likes') do
   db = SQLite3::Database.new("db/onepiece.db")
   db.results_as_hash = true
   db.execute("UPDATE characters SET likes = likes + 1 WHERE id = ?", id)
+  session[:liked_characters] ||= []
+  session[:liked_characters] << id unless session[:liked_characters].include?(id)
   redirect(:'/ranks/index')
 
 end

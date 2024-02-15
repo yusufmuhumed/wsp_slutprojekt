@@ -231,6 +231,11 @@
 
 }
 
+.like-button{
+  color:red;
+  font-size: 1.7em ;
+}
+
 .remember-forgot{
   font-size: .9em;
   color: #000000;
@@ -425,6 +430,7 @@
   width: auto;
   height: fit-content;
   flex-wrap: wrap;
+  justify-content: center;
   background-color: rgb(255, 255, 255);
 }
 
@@ -468,13 +474,12 @@
 
 
 .above-cards{
-  height: 250px;
+  height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   background-size: cover;
-  
   background-image: url(background.jpg);
 }
 
@@ -712,3 +717,13 @@
 }
 
 
+
+.like-container{
+  display: flex;
+  gap: 10px;
+}
+
+
+.name-container{
+  margin-left: 15px;
+}

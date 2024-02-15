@@ -12,10 +12,18 @@ main class="main_list"
                 img class="char-img" src="/img/one_piece_images/#{character['name']}.jpg"  
 
             li class="list_character"
-                div class="d"
+                div class="name-container"
                     a href="/ranks/#{character['id']}" #{character['name']} 
-                    div 
+                    div class="like-container"
+
                         p = character['likes']
-                    form class="like-form" action="/#{character['id']}/likes" method="post" 
-                        input type="submit" value="Like"
-            
+                        -if true
+                           span class="like-button"
+                                <ion-icon name="heart"></ion-icon>
+                        -else
+                            form class="like-form" action="/#{character['id']}/likes" method="post"
+                                input type="submit" value="Like"
+                            span class="like-button"
+                                <ion-icon name="heart"></ion-icon>
+
+                
