@@ -78,13 +78,24 @@ get('/ranks/index') do
   db = SQLite3::Database.new('db/onepiece.db')
   db.results_as_hash = true
   result = db.execute("SELECT * FROM Characters ORDER BY likes DESC")
-  @characters_likes = db.execute("SELECT * FROM Characters")
-  @liked_characters = session[:liked_characters] || []
+  @characters = db.execute("SELECT * FROM Characters")
+  liked_characters = session[:liked_characters] || []
+  p liked_characters
   #result2 = db.execute("SELECT likes FROM Characters")
-  slim(:"ranks/index", locals:{characters:result})
+  slim(:"ranks/index", locals:{characters:result,liked_characters:liked_characters})
 
 end
 
+
+# post('/like/:id') do
+#   id = params[:id].to_i
+#   db = SQLite3::Database.new("db/onepiece.db")
+#   db.results_as_hash = true
+#   db.execute("UPDATE Characters SET likes = likes + 1 WHERE id = ?", id)
+#   session[:liked_characters] ||= []
+#   session[:liked_characters] << id unless session[:liked_characters].include?(id)
+#   redirect('/ranks/index')
+# end
 
 get('/ranks/:id') do
   id = params[:id].to_i
@@ -100,7 +111,7 @@ end
 
 
 
-post('/:id/likes') do
+post('/like/:id') do
   id = params[:id].to_i
   p id
   db = SQLite3::Database.new("db/onepiece.db")

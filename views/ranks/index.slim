@@ -5,6 +5,7 @@ section  class="above-cards"
 
 
 main class="main_list"
+    -i=1
     
     - characters.each do |character|
         div class="characters-container"
@@ -15,15 +16,16 @@ main class="main_list"
                 div class="name-container"
                     a href="/ranks/#{character['id']}" #{character['name']} 
                     div class="like-container"
-
-                        p = character['likes']
-                        -if true
+                        
+                        
+                        p = i
+                        - i+=1
+                        - if liked_characters.include?(character['id'])
                            span class="like-button"
-                                <ion-icon name="heart"></ion-icon>
+                            <ion-icon name="heart"></ion-icon>
                         -else
-                            form class="like-form" action="/#{character['id']}/likes" method="post"
+                            form class="like-form" action="/like/#{character['id']}" method="post"
                                 input type="submit" value="Like"
-                            span class="like-button"
-                                <ion-icon name="heart"></ion-icon>
+                           
 
                 
