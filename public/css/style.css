@@ -432,6 +432,7 @@
   flex-wrap: wrap;
   justify-content: center;
   background-color: rgb(57, 56, 56);
+  padding-top: 20px;
 }
 
 .characters-container{
