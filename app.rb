@@ -131,18 +131,16 @@ post('/search/start') do
   name= params[:name]
   db = SQLite3::Database.new('db/onepiece.db')
   db.results_as_hash = true
-  result = db.execute("SELECT * FROM Characters WHERE name = ?",name)
+  result = db.execute("SELECT * FROM Characters WHERE name LIKE ?", (name + '%'))
+  p result
   session[:search_results] = result
   redirect(:"search/index")
 end
 
 
 get('/search/index') do
-  results= session.delete(:search_results)
+  results = session.delete(:search_results)
   p results
-
-  
-  
   slim(:"search/index",locals:{results:results})
 
 end
