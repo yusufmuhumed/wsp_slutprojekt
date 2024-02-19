@@ -29,15 +29,25 @@ post('/locked/login') do
   db = SQLite3::Database.new('db/onepiece.db')
   db.results_as_hash = true
   result = db.execute("SELECT * FROM users WHERE user_name =? OR user_mail=? ",username,email).first
-  pwdigest= result["user_pwd"]
-  id= result["id"]
 
-  if BCrypt::Password.new(pwdigest) == password
-    session[:id] = id
-    redirect('/access')
+  if result != nil
+    pwdigest= result["user_pwd"]
+    id= result["id"]
+    if BCrypt::Password.new(pwdigest) == password
+      session[:id] = id
+      redirect('/access')
+    end
+
+   
   else
     "fel lösenord"
   end
+  # if BCrypt::Password.new(pwdigest) == password
+  #   session[:id] = id
+  #   redirect('/access')
+  # else
+  #   "fel lösenord"
+  # end
 
 
 end
@@ -156,7 +166,9 @@ get('/search/:name') do
 end
 
 
-
+get('/lists/index') do 
+  slim(:"/lists/index")
+end
 
 
 
