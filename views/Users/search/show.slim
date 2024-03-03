@@ -1,0 +1,27 @@
+
+div class="character_show_container"
+    div class="background_img"
+
+    div class="character-content"
+        img class="img_cover" src="/img/one_piece_images/#{result['name']}.jpg" alt="charcter image"
+        div class="character_content_header"
+            div class="character_name"
+                h2 = result['name']
+            div class="character_crew"
+                h3 = "Crew : Whitebeard pirates"
+            div class="character_year"
+                p first apperance #{result['year']}
+            div class="character_bounty"
+                -if result['Bounty'].nil?
+                    h2 No bounty 
+                -else
+                    h2 #{result['Bounty']}
+                
+
+    div class="character-content-body"
+        h2 Key Notes:
+        div class="character-notes"
+            p First Character apperance in the manga was chapter #{result['chapter']} and in the anime, episode #{result['episode']}.  #{result['note']}
+
+
+a href="/search/start" back to search bar

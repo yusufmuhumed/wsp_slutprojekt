@@ -1,0 +1,31 @@
+section  class="above-cards"
+    div class="text-box-cards"
+        h2 Every One piece character 
+        p Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero, laudantium perspiciatis esse nesciunt illo earum ea deserunt quas sapiente perferendis reiciendis itaque doloribus? Minus, voluptatibus quidem adipisci dolore ea doloremque?
+
+
+main class="main_list"
+    -i=1
+    
+    - characters.each do |character|
+        div class="characters-container"
+            div class="char-img-box"
+                img class="char-img" src="/img/one_piece_images/#{character['name']}.jpg"  
+
+            li class="list_character"
+                div class="name-container"
+                    a href="/ranks/#{character['id']}" #{character['name']} 
+                    div class="like-container"
+                        
+                        
+                        p = i
+                        - i+=1
+                        - if liked_characters.include?(character['id'])
+                           span class="like-button"
+                            <ion-icon name="heart"></ion-icon>
+                        -else
+                            form class="like-form" action="/like/#{character['id']}" method="post"
+                                input type="submit" value="Like"
+                           
+
+                
