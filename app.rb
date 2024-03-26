@@ -33,9 +33,10 @@ post('/locked/login') do
   p user_status
   if result != nil
     pwdigest= result["user_pwd"]
-    id= result["id"]
+    @id= result["id"]
     if BCrypt::Password.new(pwdigest) == password
-      session[:id] = id
+      session[:id] = @id
+      
       if user_status["admin"] == 1
         redirect('/admin')
       else
@@ -191,10 +192,44 @@ get('/search/:name') do
 end
 
 
-get('/lists/index') do 
-  slim(:"/lists/index")
+get('/lists/index') do
+  user_id = session[:id]
+  db = SQLite3::Database.new("db/onepiece.db")
+  db.results_as_hash = true
+  results = db.execute("SELECT users.user_name, Characters.name
+  FROM((CharactersUsersRelations
+    INNER JOIN users ON CharactersUsersRelations.UsersId = users.id)
+    INNER JOIN Characters ON CharactersUsersRelations.CharactersId = Characters.id)
+  WHERE UsersId = ?", user_id)
+  p "test"
+  p session[:id]
+  slim(:"/lists/index", locals:{results:results})
+end 
+
+post('/list/add') do
+  name = params["name"]
+  userId = session[:id]
+  db = SQLite3::Database.new('db/onepiece.db')
+
+  nameId = db.execute("SELECT id FROM Characters WHERE name = ?",name).first[0]
+  if nameId == nil
+    p "hello"
+   
+  elsif name_already_in_list(nameId,userId) 
+    p "hello"  
+  else
+    db.execute("INSERT INTO CharactersUsersRelations (CharactersId,UsersId) VALUES(?,?)",nameId,userId)
+
+    
+  end
+  redirect(:'/lists/index')
+
 end
 
+post('/lists/search') do
+  
+
+end
 
 
 

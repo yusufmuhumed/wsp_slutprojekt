@@ -28,6 +28,22 @@ end
 
 # p user_status["admin"]
 
+def name_already_in_list(nameId,userId)
+   db = SQLite3::Database.new('db/onepiece.db')
+   result = db.execute("SELECT UsersId FROM CharactersUsersRelations WHERE CharactersId =? AND UsersId=?",nameId,userId)
+   p result
+   if result.length <= 0 && result.length <= 1
+      return false
+   else
+      return true
+   end
+end
+
+
+p name_already_in_list(1032,4)
+
+
+
 
 
 

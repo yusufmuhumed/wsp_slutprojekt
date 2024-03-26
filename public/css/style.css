@@ -903,12 +903,14 @@
 .search-results{
   display: flex;
   width: auto;
-  height: calc(fit-content+100px);
+  height: fit-content
   flex-wrap: wrap;
   justify-content: start;
+  background-color: rgb(57, 56, 56);
 }
 
 .search-result-container{
 
   background-color: rgb(57, 56, 56);
 }
+
