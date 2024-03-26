@@ -29,15 +29,21 @@ post('/locked/login') do
   db = SQLite3::Database.new('db/onepiece.db')
   db.results_as_hash = true
   result = db.execute("SELECT * FROM users WHERE user_name =? OR user_mail=? ",username,email).first
-
+  user_status = user_admin(username)
+  p user_status
   if result != nil
     pwdigest= result["user_pwd"]
     id= result["id"]
     if BCrypt::Password.new(pwdigest) == password
       session[:id] = id
-      redirect('/access')
-    end
+      if user_status["admin"] == 1
+        redirect('/admin')
+      else
+        redirect('/access')
+      end
 
+    end
+    
    
   else
     "fel lösenord"
@@ -56,7 +62,9 @@ get('/access') do
   slim(:"access/index")
 end
 
-
+get('/admin') do
+  slim(:"admin/index") 
+end
 
 
 get('/showlogout') do 
@@ -89,10 +97,12 @@ get('/ranks/index') do
   db.results_as_hash = true
   result = db.execute("SELECT * FROM Characters ORDER BY likes DESC")
   @characters = db.execute("SELECT * FROM Characters")
+  
   liked_characters = session[:liked_characters] || []
+  unliked_characters = session[:unliked_characters] || []
   p liked_characters
   #result2 = db.execute("SELECT likes FROM Characters")
-  slim(:"ranks/index", locals:{characters:result,liked_characters:liked_characters})
+  slim(:"ranks/index", locals:{characters:result,liked_characters:liked_characters,unliked_characters:unliked_characters})
 
 end
 
@@ -110,6 +120,7 @@ end
 get('/ranks/:id') do
   id = params[:id].to_i
   p id
+
   db = SQLite3::Database.new("db/onepiece.db")
   db.results_as_hash = true
   result = db.execute("SELECT * FROM Characters WHERE id = ?",id).first
@@ -122,6 +133,7 @@ end
 
 
 post('/like/:id') do
+  status = 0
   id = params[:id].to_i
   p id
   db = SQLite3::Database.new("db/onepiece.db")
@@ -129,6 +141,19 @@ post('/like/:id') do
   db.execute("UPDATE characters SET likes = likes + 1 WHERE id = ?", id)
   session[:liked_characters] ||= []
   session[:liked_characters] << id unless session[:liked_characters].include?(id)
+  redirect(:'/ranks/index')
+
+end
+
+post('/unlike/:id') do
+  id = params[:id].to_i
+  p id
+  db = SQLite3::Database.new("db/onepiece.db")
+  db.results_as_hash = true
+  status = 1
+  db.execute("UPDATE Characters SET likes = likes - 1 WHERE id = ?", id)
+  session[:unliked_characters] ||= []
+  session[:unliked_characters] << id unless session[:unliked_characters].include?(id)
   redirect(:'/ranks/index')
 
 end

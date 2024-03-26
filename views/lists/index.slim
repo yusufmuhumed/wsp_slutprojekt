@@ -1,8 +1,3 @@
-
-
-
-
-
 div class="lists-container"
     div class="list-info"
         h2 list maker
@@ -13,10 +8,16 @@ div class="lists-container"
 
     div class="add-list-box"
         p add list 
+        form action="/list/add" class="form-search" method="post"
+            div class="input-box"
+                span class="icon"
+                    <ion-icon name="search-outline"></ion-icon>
+                input type="search" name="name" 
+                label Search for lists
 
     div class="search-list-box"
         h2 search list 
-        form action="/search/start" class="form-search" method="post"
+        form action="/list/deleete" class="form-search" method="post"
             div class="input-box"
                 span class="icon"
                     <ion-icon name="search-outline"></ion-icon>

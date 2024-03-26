@@ -53,6 +53,17 @@
 
 }
 
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%
+}
+
+.sticky + .content {
+  padding-top: 102px;
+}
+
 .logo{
   width: 150px;
   height: fit-content;
@@ -331,6 +342,22 @@
   transition: .5s;
 }
 
+
+.link-box2{
+  width: 320px;
+  height: 500px;
+  margin: 30px;
+  position: relative;
+  border-radius: 10px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 30px rgba(0,0,0,.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(129, 41, 41, 0.705);
+  transition: .5s;
+}
+
 .link-box:hover{
   background-color: rgb(108, 35, 35);
 
@@ -349,6 +376,19 @@
   transition: .5s;
 }
 
+.link-info-box2{
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: 320px;
+  height: 97px;
+  border-radius: 0 0 10px 10px;
+  transition: .5s;
+}
+
 
 
 .link-img-box{
@@ -362,12 +402,35 @@
 
 }
 
+.link-img-box2{
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  width: 320px;
+  height: 200px;
+  border-radius: 10px 10px 0 0;
+
+}
+
 .link-info-box h2{
   margin-left: 10px;
   margin-top: 10px;
 } 
 
+.link-info-box2 h2{
+  margin-left: 10px;
+  margin-top: -75px;
+} 
+
+
 .link-info-box p{
+  margin-left: 10px;
+  margin-top: -50px;
+  font-weight: 400;
+}
+
+.link-info-box2 p{
   margin-left: 10px;
   margin-top: -50px;
   font-weight: 400;
@@ -388,6 +451,13 @@
 
   width: 300px;
   height: 300px;
+  border-radius: 10px 10px 0 0;
+}
+
+.link-img2{
+
+  width: 220px;
+  height: 200px;
   border-radius: 10px 10px 0 0;
 }
 
@@ -747,14 +817,15 @@
 
 
 .lists-container{
-  margin-left: 40px;
+  background-image: url(background.jpg);
   row-gap: 30px;
   padding-top: 50px;
   padding-left: 20px;
   padding-right: 20px;
+  padding-bottom: 20px;
   display: grid;
   grid-template-columns: 50% 50%;
-  grid-template-rows: 50% 50%;
+  grid-template-rows: 300fr;
   grid-template-areas:
   "list-info list-info" 
   "list-box list-box-characters"
@@ -768,15 +839,25 @@
 }
 
 .list-info{
+  place-self: center;
   height:300px;
-  width: 100%;
-  margin-right: -20px;
+  width: 90%;
+  margin-right: -30px;
   margin-left: -20px;
+
   margin-top: 30px;
+  margin-bottom: 40px;
+  border: 2px solid rgb(225, 255, 255,.5);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 30px rgba(0,0,0,.5);
+  background-color: transparent;
   grid-area: list-info;
+  display: flex;
+  justify-content: center;
 }
 
 .lists-container div{
+  place-self: center;
   border: 2px solid rgb(225, 255, 255,.5);
   backdrop-filter: blur(20px);
   box-shadow: 0 0 30px rgba(0,0,0,.5);
@@ -796,10 +877,12 @@
 .add-list-box{
   grid-area: list-box-characters;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   border-radius: 20px;
   width: 80%;
   height: 40vh;
+  align-items: center;
 
 }
 

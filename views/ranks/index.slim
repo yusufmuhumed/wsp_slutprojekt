@@ -20,9 +20,11 @@ main class="main_list"
                         
                         p = i
                         - i+=1
-                        - if liked_characters.include?(character['id'])
+                        - if liked_characters.include?(character['id']) && unliked_characters.include?(character['id']) == false
                            span class="like-button"
                             <ion-icon name="heart"></ion-icon>
+                           form class="unlike-form" action="/unlike/#{character['id']}" method="post"
+                                input type="submit" value="Unlike"
                         -else
                             form class="like-form" action="/like/#{character['id']}" method="post"
                                 input type="submit" value="Like"
