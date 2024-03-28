@@ -3,14 +3,31 @@ div class="lists-container"
         h2 list maker
 
     div class="list-box"
+        h2 class="title-list" My Character list   
+        
         
         - if results.empty?
             p no characters added
         - else
-            ul
+            section class="character-container" 
+                - i=0
                 - results.each do |result|
+                    
                     li class="character-list"
                         a href="#" #{result['name']}
+                        form action="/delete/#{result['name']}" method="post"
+                            input type="submit" value="Remove character" 
+                    
+                    - i+=1
+                    - if i >= 7
+                        - break loop
+                    
+
+        
+                        
+                        
+        div class="see-more"
+            a href="#" see more
                     
 
 

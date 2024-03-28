@@ -867,11 +867,43 @@
 .list-box{
   grid-area: list-box;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  position: relative;
   border-radius: 20px;
   width: 80%;
   height: 85vh;
 }
+
+.character-container {
+  margin-top: 90px;
+  margin-left: -200px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.title-list{
+  margin-left: 20px;
+  margin-top: 25px;
+}
+.character-list{
+  list-style-type: none;
+
+
+}
+
+
+
+
+.character-list a{
+  text-decoration: none;
+  color: #000000;
+  font-weight: 500;
+  font-size: 20px;
+
+  
+}
+
 
 
 .add-list-box{
@@ -903,7 +935,7 @@
 .search-results{
   display: flex;
   width: auto;
-  height: fit-content
+  height: fit-content;
   flex-wrap: wrap;
   justify-content: start;
   background-color: rgb(57, 56, 56);
@@ -914,3 +946,11 @@
   background-color: rgb(57, 56, 56);
 }
 
+.see-more{
+  position: absolute;
+  left: 80%;
+  top: 92%;
+  background-color: none;
+  border-color: none;
+
+}

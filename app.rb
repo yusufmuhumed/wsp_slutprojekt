@@ -202,7 +202,7 @@ get('/lists/index') do
     INNER JOIN Characters ON CharactersUsersRelations.CharactersId = Characters.id)
   WHERE UsersId = ?", user_id)
   p "test"
-  p session[:id]
+ 
   slim(:"/lists/index", locals:{results:results})
 end 
 
@@ -225,10 +225,27 @@ post('/list/add') do
   redirect(:'/lists/index')
 
 end
-
+ 
 post('/lists/search') do
   
 
+end
+
+post('/delete/:name') do
+  p "hello"
+  name = params[:name]
+  userId = session[:id]
+  db1 = SQLite3::Database.new('db/onepiece.db')
+  db = SQLite3::Database.new('db/onepiece.db')
+
+  db1.results_as_hash = true
+
+  nameId = db1.execute("SELECT id FROM Characters WHERE name=?",name).first['id']
+
+  p nameId
+  
+  db.execute("DELETE FROM CharactersUsersRelations WHERE CharactersId=? AND UsersId=?",nameId,userId)
+  redirect(:'/lists/index')
 end
 
 
