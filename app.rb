@@ -4,7 +4,7 @@ require 'sqlite3'
 require 'bcrypt'
 require 'sinatra/reloader'
 require_relative 'model.rb'
-
+require 'sinatra/flash'
 
 enable :sessions
 
@@ -210,15 +210,18 @@ post('/list/add') do
   name = params["name"]
   userId = session[:id]
   db = SQLite3::Database.new('db/onepiece.db')
+  if is_name_a_character(name)
+    nameId = db.execute("SELECT id FROM Characters WHERE name = ?",name).first[0]
+    if name_already_in_list(nameId,userId) 
+      p "name already in list"
+      flash[:notice] = "Charcater already in list"
 
-  nameId = db.execute("SELECT id FROM Characters WHERE name = ?",name).first[0]
-  if nameId == nil
-    p "hello"
-   
-  elsif name_already_in_list(nameId,userId) 
-    p "hello"  
+    else
+      db.execute("INSERT INTO CharactersUsersRelations (CharactersId,UsersId) VALUES(?,?)",nameId,userId)
+    end
   else
-    db.execute("INSERT INTO CharactersUsersRelations (CharactersId,UsersId) VALUES(?,?)",nameId,userId)
+    p "character dosen't exist"
+    flash[:notice] = "Character dosen't exist"
 
     
   end

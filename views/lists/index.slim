@@ -1,3 +1,6 @@
+
+
+
 div class="lists-container"
     div class="list-info"
         h2 list maker
@@ -26,7 +29,7 @@ div class="lists-container"
         
                         
                         
-        div class="see-more"
+        section class="see-more"
             a href="#" see more
                     
 
@@ -48,5 +51,10 @@ div class="lists-container"
                     <ion-icon name="search-outline"></ion-icon>
                 input type="search" name="name" 
                 label Search for character  
+
+    - if flash[:notice]
+           p.notice = flash[:notice]
+
+script src="../public/js/app.js" 
 
 

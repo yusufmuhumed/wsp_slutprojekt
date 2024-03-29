@@ -39,8 +39,21 @@ def name_already_in_list(nameId,userId)
    end
 end
 
+def is_name_a_character(name)
+   db = SQLite3::Database.new('db/onepiece.db')
+   db.results_as_hash = true
+   result = db.execute("SELECT name FROM Characters WHERE name =? ",name)
+   p result
+   if result == [] 
+      return false
+   else
+      return true
+   end
 
-p name_already_in_list(1032,4)
+end
+
+
+p is_name_a_character("Monkey D. Luffy")
 
 
 

@@ -14,3 +14,9 @@ function myFunction() {
     header.classList.remove("sticky");
   }
 }
+
+setTimeout(function() {
+  document.querySelector('.notice').style.display = 'none';
+}, 5000);
+
+  
