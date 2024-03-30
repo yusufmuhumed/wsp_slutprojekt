@@ -1,0 +1,12 @@
+- if results.empty?
+    p No results found
+- else
+div class="search-results"
+    - results.each do |result|
+        div class="characters-container"
+            div class="char-img-box"
+                img class="char-img" src="/img/one_piece_images/#{result['name']}.jpg"  
+
+            li class="list_character"
+                div class="name-container"
+                    a href="/search/#{result["name"]}" #{result["name"]} 

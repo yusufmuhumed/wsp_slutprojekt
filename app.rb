@@ -204,7 +204,21 @@ get('/lists/index') do
   p "test"
  
   slim(:"/lists/index", locals:{results:results})
-end 
+end
+
+get('/lists/see-more') do
+  user_id = session[:id]
+  db = SQLite3::Database.new("db/onepiece.db")
+  db.results_as_hash = true
+  results = db.execute("SELECT users.user_name, Characters.name
+  FROM((CharactersUsersRelations
+    INNER JOIN users ON CharactersUsersRelations.UsersId = users.id)
+    INNER JOIN Characters ON CharactersUsersRelations.CharactersId = Characters.id)
+  WHERE UsersId = ?", user_id)
+  p "test"
+  p results
+  slim(:"/lists/see-more", locals:{results:results})
+end
 
 post('/list/add') do
   name = params["name"]
