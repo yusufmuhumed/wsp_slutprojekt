@@ -973,3 +973,18 @@
   font-size:2rem;
   text-align: center;
 } 
+
+.room{
+  background-color: rgb(57, 56, 56);
+  display: flex;
+  justify-content: center;
+  padding-top: 100px;
+  height: 150px;
+
+}
+
+.room h2{
+  color: #fff;
+  font-size: 28px;
+
+}
