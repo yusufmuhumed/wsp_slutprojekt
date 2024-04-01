@@ -36,8 +36,10 @@ post('/locked/login') do
     @id= result["id"]
     if BCrypt::Password.new(pwdigest) == password
       session[:id] = @id
+      session[:user_status] = user_status["admin"]
       
-      if user_status["admin"] == 1
+      if session[:user_status] == 1   
+        
         redirect('/admin')
       else
         redirect('/access')
@@ -59,17 +61,20 @@ post('/locked/login') do
 
 end
 
-get('/access') do 
-  slim(:"access/index")
+get('/access') do
+  @user_status = session[:user_status]
+  slim(:"access/index",locals:{user_status:@user_status})
 end
 
 get('/admin') do
-  slim(:"admin/index") 
+  @user_status = session[:user_status]
+  slim(:"admin/index",locals:{user_status:@user_status}) 
 end
 
 
-get('/showlogout') do 
-    slim(:logout)
+get('/showlogout') do
+  session[:id] = 0
+  slim(:logout)
 end
 
 post("/locked/new") do
@@ -94,6 +99,8 @@ end
 
 
 get('/ranks/index') do
+  @user_status = session[:user_status]
+
   db = SQLite3::Database.new('db/onepiece.db')
   db.results_as_hash = true
   result = db.execute("SELECT * FROM Characters ORDER BY likes DESC")
@@ -103,7 +110,7 @@ get('/ranks/index') do
   unliked_characters = session[:unliked_characters] || []
   p liked_characters
   #result2 = db.execute("SELECT likes FROM Characters")
-  slim(:"ranks/index", locals:{characters:result,liked_characters:liked_characters,unliked_characters:unliked_characters})
+  slim(:"ranks/index", locals:{characters:result,liked_characters:liked_characters,unliked_characters:unliked_characters,user_status:@user_status})
 
 end
 
@@ -119,6 +126,7 @@ end
 # end
 
 get('/ranks/:id') do
+  @user_status = session[:user_status]
   id = params[:id].to_i
   p id
 
@@ -127,7 +135,7 @@ get('/ranks/:id') do
   result = db.execute("SELECT * FROM Characters WHERE id = ?",id).first
   #result2 = db.execute("SELECT Name FROM artists WHERE ArtistID IN (SELECT ArtistId FROM albums WHERE AlbumId = ?)",id).first
   p "resultatet är: #{result}"
-  slim(:"ranks/show",locals:{result:result})
+  slim(:"ranks/show",locals:{result:result,user_status:@user_status})
 end
 
 
@@ -160,7 +168,8 @@ post('/unlike/:id') do
 end
 
 get('/search/start') do
-  slim(:'search/start')
+  @user_status = session[:user_status]
+  slim(:'search/start',locals:{user_status:@user_status})
 end
 
 post('/search/start') do
@@ -175,24 +184,27 @@ end
 
 
 get('/search/index') do
+  @user_status = session[:user_status]
   results = session.delete(:search_results)
   p results
-  slim(:"search/index",locals:{results:results})
+  slim(:"search/index",locals:{results:results,user_status:@user_status})
 
 end
 
 get('/search/:name') do
+  @user_status = session[:user_status]
   name=params[:name]
   db = SQLite3::Database.new("db/onepiece.db")
   db.results_as_hash = true
   result = db.execute("SELECT * FROM Characters WHERE name = ?",name).first
   
 
-  slim(:"search/show",locals:{result:result})
+  slim(:"search/show",locals:{result:result,user_status:@user_status})
 end
 
 
 get('/lists/index') do
+  @user_status = session[:user_status]
   user_id = session[:id]
   db = SQLite3::Database.new("db/onepiece.db")
   db.results_as_hash = true
@@ -203,10 +215,11 @@ get('/lists/index') do
   WHERE UsersId = ?", user_id)
   p "test"
  
-  slim(:"/lists/index", locals:{results:results})
+  slim(:"/lists/index", locals:{results:results,user_status:@user_status})
 end
 
 get('/lists/see-more') do
+  @user_status = session[:user_status]
   user_id = session[:id]
   db = SQLite3::Database.new("db/onepiece.db")
   db.results_as_hash = true
@@ -217,7 +230,7 @@ get('/lists/see-more') do
   WHERE UsersId = ?", user_id)
   p "test"
   p results
-  slim(:"/lists/see-more", locals:{results:results})
+  slim(:"/lists/see-more", locals:{results:results,user_status:@user_status})
 end
 
 post('/list/add') do
@@ -266,4 +279,7 @@ post('/delete/:name') do
 end
 
 
-
+get('/admin_service/index') do
+  @user_status = session[:user_status]
+  slim(:'/admin_service/index',locals:{user_status:@user_status})
+end

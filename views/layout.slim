@@ -11,17 +11,25 @@ html lang="en"
       img class="logo" src="img/One_Piece_Logo.svg" alt="one piece logo" 
       h2 class="logo_text" List 
       nav class="navigation"
-        a href="/access" Home
-        a href="#" About 
-        a href="#" Services 
-        a href="#" Contact
-        a href="/showlogout" Logout
+        -if @user_status == 1
+            a href="/admin" Home
+            a href="#" About 
+            a href="#" Services 
+            a href="#" Contact
+            a href="/showlogout" Logout
+        -else
+           
+            a href="/access" Home
+            a href="#" About 
+            a href="#" Services 
+            a href="#" Contact
+            a href="/showlogout" Logout
 
 
 
     
 
-    script src="../public/js/app.js"
+    script src="js/app.js"
     script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" 
     script  src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js" 
 
