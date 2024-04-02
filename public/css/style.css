@@ -711,6 +711,7 @@
 
 
 .character_show_container {
+  background-color:#878d60;
   display: grid;
   grid-template-columns: 8% 1fr 8%;
   grid-template-rows: 442px 1fr;

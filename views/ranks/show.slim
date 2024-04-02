@@ -11,9 +11,10 @@ div class="character_show_container"
             div class="character_year"
                 p first apperance #{result['year']}
             div class=""
-                form action="/delete/#{result['name']}" method="post"
+                - if @user_status ==1
+                    form action="/delete/#{result['name']}" method="post"
                             input type="submit" value="Remove character"
-                a href="#" edit character
+                    a href="/#{result['name']}/edit" edit character
                     
 
     div class="character-content-body"

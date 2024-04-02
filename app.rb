@@ -283,3 +283,20 @@ get('/admin_service/index') do
   @user_status = session[:user_status]
   slim(:'/admin_service/index',locals:{user_status:@user_status})
 end
+
+post('/delete/:name') do
+  name = params[:name]
+  db = SQLite3::Database.new('db/onepiece.db')
+  db.results_as_hash = true
+  db.execute("DELETE FROM Characters WHERE name=?",name)
+  redirect(:"/ranks/index")
+end
+
+get("/:name/edit") do
+  @user_status = session[:user_status]
+  name = params[:name]
+  db = SQLite3::Database.new('db/onepiece.db')
+  db.results_as_hash = true
+  result = db.execute(" SELECT * FROM Characters WHERE name=?",name).first
+  slim(:'/ranks/edit',locals:{result:result,user_status:@user_status})
+end

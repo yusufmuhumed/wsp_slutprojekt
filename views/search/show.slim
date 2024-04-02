@@ -1,4 +1,3 @@
-
 div class="character_show_container"
     div class="background_img"
 
@@ -11,17 +10,21 @@ div class="character_show_container"
                 h3 = "Crew : Whitebeard pirates"
             div class="character_year"
                 p first apperance #{result['year']}
-            div class="character_bounty"
-                -if result['Bounty'].nil?
-                    h2 No bounty 
-                -else
-                    h2 #{result['Bounty']}
-                
+            div class=""
+                - if @user_status ==1
+                    form action="/delete/#{result['name']}" method="post"
+                            input type="submit" value="Remove character"
+                    a href="/#{result['name']}/edit" edit character
+                    
 
     div class="character-content-body"
         h2 Key Notes:
         div class="character-notes"
             p First Character apperance in the manga was chapter #{result['chapter']} and in the anime, episode #{result['episode']}.  #{result['note']}
 
+
+
+
+a href="/ranks/index" back to ranks 
 
 a href="/search/start" back to search bar
