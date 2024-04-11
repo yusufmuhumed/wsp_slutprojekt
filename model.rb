@@ -1,5 +1,5 @@
 require "sqlite3"
-
+require "bcrypt"
 
 def connect_to_db(path)
     db = SQLite3::Database.new(path)
@@ -15,12 +15,37 @@ def list_name()
  
 end
 
+def user(username,email)
+   db = SQLite3::Database.new('db/onepiece.db')
+   db.results_as_hash = true
+   result = db.execute("SELECT * FROM users WHERE user_name =? OR user_mail=? ",username,email).first
+   return result
+end
+
+
 def user_admin(user)
    db = SQLite3::Database.new('db/onepiece.db')
    db.results_as_hash = true
    result = db.execute("SELECT admin FROM users WHERE user_name=?",user).first
    return result
 end
+
+def login(result,user_status,password)
+   if result != nil
+      pwdigest= result["user_pwd"]
+      @id= result["id"]
+      if BCrypt::Password.new(pwdigest) == password
+        session[:id] = @id
+        session[:user_status] = user_status["admin"]
+        return true
+      else
+         return false
+      end
+
+   end
+
+end
+
 
 # username="yusuf"
 # user_status= user_admin("yusuf")
@@ -53,7 +78,6 @@ def is_name_a_character(name)
 end
 
 
-p is_name_a_character("Monkey D. Luffy")
 
 
 

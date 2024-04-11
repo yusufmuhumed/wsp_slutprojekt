@@ -26,37 +26,23 @@ post('/locked/login') do
   username = params[:username]
   password = params[:password]
   email = params[:email]
-  db = SQLite3::Database.new('db/onepiece.db')
-  db.results_as_hash = true
-  result = db.execute("SELECT * FROM users WHERE user_name =? OR user_mail=? ",username,email).first
+  result = user(username,email)
   user_status = user_admin(username)
-  p user_status
-  if result != nil
-    pwdigest= result["user_pwd"]
-    @id= result["id"]
-    if BCrypt::Password.new(pwdigest) == password
-      session[:id] = @id
-      session[:user_status] = user_status["admin"]
+  
+  if login(result,user_status,password)    
+    if session[:user_status] == 1   
       
-      if session[:user_status] == 1   
-        
-        redirect('/admin')
-      else
-        redirect('/access')
-      end
-
+      redirect('/admin')
+    else
+      redirect('/access')
     end
+
+    
     
    
   else
     "fel lösenord"
   end
-  # if BCrypt::Password.new(pwdigest) == password
-  #   session[:id] = id
-  #   redirect('/access')
-  # else
-  #   "fel lösenord"
-  # end
 
 
 end
@@ -144,7 +130,7 @@ end
 post('/like/:id') do
   status = 0
   id = params[:id].to_i
-  p id
+  
   db = SQLite3::Database.new("db/onepiece.db")
   db.results_as_hash = true
   db.execute("UPDATE characters SET likes = likes + 1 WHERE id = ?", id)
@@ -156,7 +142,6 @@ end
 
 post('/unlike/:id') do
   id = params[:id].to_i
-  p id
   db = SQLite3::Database.new("db/onepiece.db")
   db.results_as_hash = true
   status = 1
