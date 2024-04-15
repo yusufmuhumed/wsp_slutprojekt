@@ -3,14 +3,14 @@ require "bcrypt"
 
 
 def connect_to_db(path)
-    db = SQLite3::Database.new(path)
-    db.results_as_hash = true
-    return db
-   end
+   db = SQLite3::Database.new(path)
+   db.results_as_hash = true
+   return db
+   
+end
 
 def list_name()
-   db = SQLite3::Database.new('db/onepiece.db')
-   db.results_as_hash = true
+   db= connect_to_db('db/onepiece.db')
    result = db.execute("SELECT name FROM Characters")
    return result
  
@@ -23,16 +23,14 @@ def list_characters_info()
 end
 
 def user(username,email)
-   db = SQLite3::Database.new('db/onepiece.db')
-   db.results_as_hash = true
+   db = connect_to_db('db/onepiece.db')
    result = db.execute("SELECT * FROM users WHERE user_name =? OR user_mail=? ",username,email).first
    return result
 end
 
 
 def user_admin(user)
-   db = SQLite3::Database.new('db/onepiece.db')
-   db.results_as_hash = true
+   db = connect_to_db('db/onepiece.db')
    result = db.execute("SELECT admin FROM users WHERE user_name=?",user).first
    return result
 end
@@ -72,8 +70,7 @@ def name_already_in_list(nameId,userId)
 end
 
 def is_name_a_character(name)
-   db = SQLite3::Database.new('db/onepiece.db')
-   db.results_as_hash = true
+   db = connect_to_db('db/onepiece.db')
    result = db.execute("SELECT name FROM Characters WHERE name =? ",name)
    p result
    if result == [] 
@@ -86,7 +83,6 @@ end
 
 
 def register(username,password,email,password_confirm)
-   p "hello"
    if password == password_confirm
       password_digest= BCrypt::Password.create(password)
       db = SQLite3::Database.new('db/onepiece.db')
@@ -100,49 +96,42 @@ def register(username,password,email,password_confirm)
 end
 
 def ranks()
-   db = SQLite3::Database.new('db/onepiece.db')
-   db.results_as_hash = true
+   db = connect_to_db('db/onepiece.db')
    result = db.execute("SELECT * FROM Characters ORDER BY likes DESC")
    return result
 end
 
 
 def character(id)
-   db = SQLite3::Database.new("db/onepiece.db")
-   db.results_as_hash = true
+   db = connect_to_db('db/onepiece.db')
    result = db.execute("SELECT * FROM Characters WHERE id = ?",id).first
    return result
 end
 
 def like(id)
-   db = SQLite3::Database.new("db/onepiece.db")
-   db.results_as_hash = true
+   db = connect_to_db('db/onepiece.db')
    db.execute("UPDATE characters SET likes = likes + 1 WHERE id = ?", id)
 end
 
 def unlike(id)
-   db = SQLite3::Database.new("db/onepiece.db")
-   db.results_as_hash = true
+   db = connect_to_db('db/onepiece.db')
    db.execute("UPDATE Characters SET likes = likes - 1 WHERE id = ?", id)
 end
 
 def search(name)
-   db = SQLite3::Database.new('db/onepiece.db')
-   db.results_as_hash = true
+   db = connect_to_db('db/onepiece.db')
    result = db.execute("SELECT * FROM Characters WHERE name LIKE ?", (name + '%'))
    return result
 end
 
 def select_name_where(name)
-   db = SQLite3::Database.new("db/onepiece.db")
-   db.results_as_hash = true
+   db = connect_to_db('db/onepiece.db')
    result = db.execute("SELECT * FROM Characters WHERE name = ?",name).first
    return result
 end
 
 def user_list(user_id)
-   db = SQLite3::Database.new("db/onepiece.db")
-   db.results_as_hash = true
+   db = connect_to_db('db/onepiece.db')
    results = db.execute("SELECT users.user_name, Characters.name
    FROM((CharactersUsersRelations
       INNER JOIN users ON CharactersUsersRelations.UsersId = users.id)
@@ -171,8 +160,7 @@ def add_character_to_list(name,userId)
 end
 
 def name_to_id(name)
-   db = SQLite3::Database.new('db/onepiece.db')
-   db.results_as_hash = true
+   db = connect_to_db('db/onepiece.db')
    nameId = db.execute("SELECT id FROM Characters WHERE name=?",name).first['id']
    return nameId
 end
@@ -185,8 +173,7 @@ end
 
 
 def delete_character(name)
-   db = SQLite3::Database.new('db/onepiece.db')
-   db.results_as_hash = true
+   db = connect_to_db('db/onepiece.db')
    db.execute("DELETE FROM Characters WHERE name=?",name)
 end
 

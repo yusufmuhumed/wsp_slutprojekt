@@ -96,15 +96,6 @@ get('/ranks/index') do
 end
 
 
-# post('/like/:id') do
-#   id = params[:id].to_i
-#   db = SQLite3::Database.new("db/onepiece.db")
-#   db.results_as_hash = true
-#   db.execute("UPDATE Characters SET likes = likes + 1 WHERE id = ?", id)
-#   session[:liked_characters] ||= []
-#   session[:liked_characters] << id unless session[:liked_characters].include?(id)
-#   redirect('/ranks/index')
-# end
 
 get('/ranks/:id') do
   @user_status = session[:user_status]
@@ -145,7 +136,6 @@ end
 post('/search/start') do
   name= params[:name]
   result = search(name)
-  p result
   session[:search_results] = result
   redirect(:"search/index")
 end
@@ -171,20 +161,14 @@ end
 get('/lists/index') do
   @user_status = session[:user_status]
   user_id = session[:id]
-  results = user_list(user_id)
-  p "test"
- 
+  results = user_list(user_id) 
   slim(:"/lists/index", locals:{results:results,user_status:@user_status})
 end
 
 get('/lists/see-more') do
   @user_status = session[:user_status]
   user_id = session[:id]
-  db = SQLite3::Database.new("db/onepiece.db")
-  db.results_as_hash = true
   results = user_list(user_id)
-  p "test"
-  p results
   slim(:"/lists/see-more", locals:{results:results,user_status:@user_status})
 end
 
@@ -202,25 +186,17 @@ post('/lists/search') do
 end
 
 post('/delete/:name') do
-  p "hello"
   character_name = params[:name]
   userId = session[:id]
-  db1 = SQLite3::Database.new('db/onepiece.db')
-  db = SQLite3::Database.new('db/onepiece.db')
-
-  db1.results_as_hash = true
-
   nameId = name_to_id(character_name)
-
   delete_character_from_list(nameId,userId)
-  
   redirect(:'/lists/index')
 end
 
 
-get('/admin_service/index') do
+get('/admin_service/new') do
   @user_status = session[:user_status]
-  slim(:'/admin_service/index',locals:{user_status:@user_status})
+  slim(:'/admin_service/new',locals:{user_status:@user_status})
 end
 
 post('/delete/:name') do
@@ -229,11 +205,16 @@ post('/delete/:name') do
   redirect(:"/ranks/index")
 end
 
-get("/:name/edit") do
+get("/ranks/:name/edit") do
   @user_status = session[:user_status]
   name = params[:name]
   db = SQLite3::Database.new('db/onepiece.db')
   db.results_as_hash = true
   result = db.execute(" SELECT * FROM Characters WHERE name=?",name).first
-  slim(:'/ranks/edit',locals:{result:result,user_status:@user_status})
+  slim(:'/ranks/:name/edit',locals:{result:result,user_status:@user_status})
+end
+
+
+post("/ranks/:name/update") do
+  
 end

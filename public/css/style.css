@@ -1012,7 +1012,7 @@
 
 .add-character-box{
   width: 40vw;
-  height: 400px;
+  height: 500px;
   border: 2px solid rgb(225, 255, 255,.5);
   backdrop-filter: blur(20px);
   box-shadow: 0 0 30px rgba(0,0,0,.5);
