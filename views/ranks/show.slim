@@ -14,7 +14,7 @@ div class="character_show_container"
                 - if @user_status ==1
                     form action="/delete/#{result['name']}" method="post"
                             input type="submit" value="Remove character"
-                    a href="/#{result['name']}/edit" edit character
+                    a href="/ranks/#{result['id']}/edit" edit character
                     
 
     div class="character-content-body"

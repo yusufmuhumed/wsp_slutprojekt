@@ -205,16 +205,24 @@ post('/delete/:name') do
   redirect(:"/ranks/index")
 end
 
-get("/ranks/:name/edit") do
+get("/ranks/:id/edit") do
   @user_status = session[:user_status]
   name = params[:name]
   db = SQLite3::Database.new('db/onepiece.db')
   db.results_as_hash = true
   result = db.execute(" SELECT * FROM Characters WHERE name=?",name).first
-  slim(:'/ranks/:name/edit',locals:{result:result,user_status:@user_status})
+  slim(:'/ranks/:id/edit',locals:{result:result,user_status:@user_status})
 end
 
 
-post("/ranks/:name/update") do
-  
+post("/ranks/:id/update") do
+  name = params[:character_name]
+  chapter = params[:chapter]
+  episode = params[:episode]
+  year = params[:year]
+  note = params[:note]
+  bounty = params[:bounty]
+  id = name_to_id(params[:name])
+  edit_character(name,chapter,episode,year,note,bounnty,id)
+  redirect(:'/ranks/:id/edit')
 end

@@ -180,6 +180,11 @@ end
 
 
 
+def edit_character(name,chapter,episode,year,note,bounnty,id)
+   db = connect_to_db()
+   db.execute("UPDATE Characters name=?, chapter=?, episode=?, year=?, note=?, bounty=?
+   WHERE  id=?",name,chapter,episode,year,note,bounty,id)
+end
 
 
 
