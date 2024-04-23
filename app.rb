@@ -81,7 +81,7 @@ end
 
 
 
-get('/ranks/index') do
+get('/ranks') do
   @user_status = session[:user_status]
 
   result = ranks()
@@ -130,22 +130,22 @@ end
 
 get('/search/start') do
   @user_status = session[:user_status]
-  slim(:'search/start',locals:{user_status:@user_status})
+  slim(:'/search/start',locals:{user_status:@user_status})
 end
 
 post('/search/start') do
   name= params[:name]
   result = search(name)
   session[:search_results] = result
-  redirect(:"search/index")
+  redirect(:"/search")
 end
 
 
-get('/search/index') do
+get('/search') do
   @user_status = session[:user_status]
   results = session.delete(:search_results)
   p results
-  slim(:"search/index",locals:{results:results,user_status:@user_status})
+  slim(:"/search/index",locals:{results:results,user_status:@user_status})
 
 end
 
@@ -158,7 +158,7 @@ get('/search/:name') do
 end
 
 
-get('/lists/index') do
+get('/lists') do
   @user_status = session[:user_status]
   user_id = session[:id]
   results = user_list(user_id) 
@@ -180,10 +180,7 @@ post('/list/add') do
 
 end
  
-post('/lists/search') do
-  
 
-end
 
 post('/delete/:name') do
   character_name = params[:name]
