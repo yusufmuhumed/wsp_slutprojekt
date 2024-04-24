@@ -8,15 +8,17 @@ require 'sinatra/flash'
 
 enable :sessions
 
+include Model
 
-
-
+# Display Login
+#
 get('/') do
   slim(:"locked/new")
 end
 
-
-get('/showlogin') do
+# Display Login
+#
+get('/login') do
   slim(:"locked/login")
 end
 
@@ -41,7 +43,7 @@ post('/locked/login') do
     
    
   else
-    "fel lösenord"
+    redircet(:'/login')
   end
 
 
@@ -90,7 +92,6 @@ get('/ranks') do
   liked_characters = session[:liked_characters] || []
   unliked_characters = session[:unliked_characters] || []
   p liked_characters
-  #result2 = db.execute("SELECT likes FROM Characters")
   slim(:"ranks/index", locals:{characters:result,liked_characters:liked_characters,unliked_characters:unliked_characters,user_status:@user_status})
 
 end
