@@ -181,9 +181,15 @@ module Model
 
 
    def edit_character(name,chapter,episode,year,note,bounnty,id)
-      db = connect_to_db()
+      db = connect_to_db('db/onepiece.db')
       db.execute("UPDATE Characters name=?, chapter=?, episode=?, year=?, note=?, bounty=?
       WHERE  id=?",name,chapter,episode,year,note,bounty,id)
+   end
+
+
+   def add_character_to_db(name,chapter,episode,year,note,bounty,like)
+      db = connect_to_db('db/onepiece.db')
+      db.execute("INSERT INTO Characters (name,chapter,episode,year,note,bounty,likes) VALUES(?,?,?,?,?,?,?)",name,chapter,episode,year,note,bounty,like)
    end
 
 end

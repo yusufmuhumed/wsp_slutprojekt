@@ -10,6 +10,17 @@ enable :sessions
 
 include Model
 
+before('/access') do
+  p "Before KÖRS, session_user_id är #{session[:user_id]}."
+  if (session[:user_id] ==  nil) 
+    flash[:error]= "You need to log in to see this"
+    redirect('/login')
+  end
+end
+
+
+
+
 # Display Login
 #
 get('/') do
@@ -43,7 +54,7 @@ post('/locked/login') do
     
    
   else
-    redircet(:'/login')
+    redirect('/login')
   end
 
 
@@ -115,7 +126,7 @@ post('/like/:id') do
   like(id)
   session[:liked_characters] ||= []
   session[:liked_characters] << id unless session[:liked_characters].include?(id)
-  redirect(:'/ranks/index')
+  redirect('/ranks')
 
 end
 
@@ -125,7 +136,7 @@ post('/unlike/:id') do
   unlike(id)
   session[:unliked_characters] ||= []
   session[:unliked_characters] << id unless session[:unliked_characters].include?(id)
-  redirect(:'/ranks/index')
+  redirect('/ranks')
 
 end
 
@@ -138,7 +149,7 @@ post('/search/start') do
   name= params[:name]
   result = search(name)
   session[:search_results] = result
-  redirect(:"/search")
+  redirect("/search")
 end
 
 
@@ -177,7 +188,7 @@ post('/list/add') do
   name = params["name"]
   userId = session[:id]
   add_character_to_list(name,userId)
-  redirect(:'/lists/index')
+  redirect('/lists')
 
 end
  
@@ -188,7 +199,7 @@ post('/delete/:name') do
   userId = session[:id]
   nameId = name_to_id(character_name)
   delete_character_from_list(nameId,userId)
-  redirect(:'/lists/index')
+  redirect('/lists')
 end
 
 
@@ -197,10 +208,22 @@ get('/admin_service/new') do
   slim(:'/admin_service/new',locals:{user_status:@user_status})
 end
 
+post('/admin_service/') do
+  name = params[:name]
+  chapter = params[:chapter]
+  episode = params[:episode]
+  year = params[:year]
+  note = params[:note]
+  bounty = params[:bounty]
+  like = 0
+  add_character_to_db(name,chapter,episode,year,note,bounty,like)
+  redirect('/admin_service/new')
+end
+
 post('/delete/:name') do
   name = params[:name]
   delete_character(name)
-  redirect(:"/ranks/index")
+  redirect("/ranks/index")
 end
 
 get("/ranks/:id/edit") do
@@ -222,5 +245,8 @@ post("/ranks/:id/update") do
   bounty = params[:bounty]
   id = name_to_id(params[:name])
   edit_character(name,chapter,episode,year,note,bounnty,id)
-  redirect(:'/ranks/:id/edit')
+  redirect('/ranks/:id')
 end
+
+
+
