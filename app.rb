@@ -10,9 +10,11 @@ enable :sessions
 
 include Model
 
-before('/access') do
+before do
+  restricted_paths = ['/access', '/admin', '/ranks', '/search/start', '/lists','/admin_services']
+
   p "Before KÖRS, session_user_id är #{session[:user_id]}."
-  if (session[:user_id] ==  nil) 
+  if (session[:user_id] ==  nil && restricted_paths.include?(request.path_info))
     flash[:error]= "You need to log in to see this"
     redirect('/login')
   end
