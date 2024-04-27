@@ -165,6 +165,11 @@ module Model
       return nameId
    end
 
+   def name_to_id2(name)
+      db = connect_to_db('db/onepiece.db')
+      nameId = db.execute("SELECT id FROM Characters WHERE name=?",name).first
+      return nameId
+   end
 
    def delete_character_from_list(nameId,userId)
       db = SQLite3::Database.new('db/onepiece.db')
@@ -182,8 +187,8 @@ module Model
 
    def edit_character(name,chapter,episode,year,note,bounnty,id)
       db = connect_to_db('db/onepiece.db')
-      db.execute("UPDATE Characters name=?, chapter=?, episode=?, year=?, note=?, bounty=?
-      WHERE  id=?",name,chapter,episode,year,note,bounty,id)
+      db.execute("UPDATE Characters name=?, chapter=?, episode=?, year=?, note=?, bounty=?, likes=?
+      WHERE  id=?",name,chapter,episode,year,note,bounty,0,id)
    end
 
 
@@ -191,6 +196,8 @@ module Model
       db = connect_to_db('db/onepiece.db')
       db.execute("INSERT INTO Characters (name,chapter,episode,year,note,bounty,likes) VALUES(?,?,?,?,?,?,?)",name,chapter,episode,year,note,bounty,like)
    end
+
+   
 
 end
 

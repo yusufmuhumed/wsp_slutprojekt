@@ -12,9 +12,7 @@ include Model
 
 before do
   restricted_paths = ['/access', '/admin', '/ranks', '/search/start', '/lists','/admin_services']
-
-  p "Before KÖRS, session_user_id är #{session[:user_id]}."
-  if (session[:user_id] ==  nil && restricted_paths.include?(request.path_info))
+  if (session[:id] ==  nil && restricted_paths.include?(request.path_info))
     flash[:error]= "You need to log in to see this"
     redirect('/login')
   end
@@ -56,7 +54,9 @@ post('/locked/login') do
     
    
   else
+    flash[:error_login] = "Wrong username or password. Please try again." 
     redirect('/login')
+
   end
 
 
@@ -74,7 +74,7 @@ end
 
 
 get('/showlogout') do
-  session[:id] = 0
+  session[:id] = nil
   slim(:logout)
 end
 
@@ -115,6 +115,8 @@ get('/ranks/:id') do
   @user_status = session[:user_status]
   id = params[:id].to_i
   result= character(id)
+  @name = result["name"]
+  p @name
   slim(:"ranks/show",locals:{result:result,user_status:@user_status})
 end
 
@@ -230,11 +232,11 @@ end
 
 get("/ranks/:id/edit") do
   @user_status = session[:user_status]
-  name = params[:name]
-  db = SQLite3::Database.new('db/onepiece.db')
-  db.results_as_hash = true
-  result = db.execute(" SELECT * FROM Characters WHERE name=?",name).first
-  slim(:'/ranks/:id/edit',locals:{result:result,user_status:@user_status})
+  id = params[:id]
+  result = character(id)
+  
+  slim(:'/ranks/edit',locals:{result:result,user_status:@user_status})
+
 end
 
 
@@ -245,8 +247,10 @@ post("/ranks/:id/update") do
   year = params[:year]
   note = params[:note]
   bounty = params[:bounty]
-  id = name_to_id(params[:name])
-  edit_character(name,chapter,episode,year,note,bounnty,id)
+  id = name_to_id2(@name)
+  p @name
+  p id
+  edit_character(name,chapter,episode,year,note,bounty,id)
   redirect('/ranks/:id')
 end
 

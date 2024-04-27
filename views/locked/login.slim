@@ -30,5 +30,11 @@ body id="login-body"
                     
 
         
+        - if flash[:error_login]
+           p.error_login  = flash[:error_login]
+        - if flash[:error]
+           p.error_login = flash[:error]
+             
 
+        
 

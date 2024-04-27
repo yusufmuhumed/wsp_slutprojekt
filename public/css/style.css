@@ -987,6 +987,23 @@
   text-align: center;
 } 
 
+.error_login{
+  background:rgb(255, 255, 255);
+  border-radius: 10px;
+  border: solid 5px rgb(32, 60, 138);
+  width:50vw;
+  padding:50px;
+  position:fixed;
+  left: calc(50% - 25vw);
+  top: 30%;
+  font-size:2rem;
+  text-align: center;
+}
+
+.error_login{
+  transition: 3s;
+}
+
 .room{
   background-color: rgb(57, 56, 56);
   display: flex;

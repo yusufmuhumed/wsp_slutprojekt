@@ -19,4 +19,9 @@ setTimeout(function() {
   document.querySelector('.notice').style.display = 'none';
 }, 2000);
 
+
+setTimeout(function() {
+  document.querySelector('.error_login').style.display = 'none';
+}, 2000);
   
+
