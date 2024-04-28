@@ -108,14 +108,23 @@ module Model
       return result
    end
 
-   def like(id)
+   def like(id,user_id)
       db = connect_to_db('db/onepiece.db')
       db.execute("UPDATE characters SET likes = likes + 1 WHERE id = ?", id)
+      db.execute("INSERT INTO likes (character_id,user_id) VALUES(?,?)",id,user_id)
    end
 
-   def unlike(id)
+   def unlike(id,user_id)
       db = connect_to_db('db/onepiece.db')
       db.execute("UPDATE Characters SET likes = likes - 1 WHERE id = ?", id)
+      db.execute("DELETE FROM likes WHERE character_id=? AND user_id=?",id,user_id)
+      
+   end
+
+   def liked_characters(user_id)
+      db = SQLite3::Database.new('db/onepiece.db')
+      result = db.execute("SELECT character_id FROM likes WHERE user_id=?", user_id).flatten
+      return result
    end
 
    def search(name)
@@ -195,6 +204,15 @@ module Model
    def add_character_to_db(name,chapter,episode,year,note,bounty,like)
       db = connect_to_db('db/onepiece.db')
       db.execute("INSERT INTO Characters (name,chapter,episode,year,note,bounty,likes) VALUES(?,?,?,?,?,?,?)",name,chapter,episode,year,note,bounty,like)
+   end
+
+   def user_likes(user_id)
+      db =  SQLite3::Database.new('db/onepiece.db')
+      result=db.execute("SELECT character_id FROM likes where user_id=?",user_id).flatten
+      p result
+      return result
+
+      
    end
 
    

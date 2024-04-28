@@ -16,13 +16,16 @@ html lang="en"
             a href="#" About 
             a href="#" Services 
             a href="#" Contact
-            a href="/showlogout" Logout
+            -if @userid =! nil 
+              a href="/showlogout" Logout
         -else
            
             a href="/access" Home
             a href="#" About 
             a href="#" Services 
             a href="#" Contact
+            -if @userid =! nil 
+              a href="/showlogout" Logout
             
 
 

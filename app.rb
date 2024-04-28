@@ -42,7 +42,7 @@ post('/locked/login') do
   result = user(username,email)
   user_status = user_admin(username)
   
-  if login(result,user_status,password)    
+  if login(result,user_status,password)  
     if session[:user_status] == 1   
       
       redirect('/admin')
@@ -63,6 +63,8 @@ post('/locked/login') do
 end
 
 get('/access') do
+  @userid=session[:id]
+  p @userid
   @user_status = session[:user_status]
   slim(:"access/index",locals:{user_status:@user_status})
 end
@@ -102,10 +104,8 @@ get('/ranks') do
   result = ranks()
   @characters = list_characters_info()
   
-  liked_characters = session[:liked_characters] || []
-  unliked_characters = session[:unliked_characters] || []
-  p liked_characters
-  slim(:"ranks/index", locals:{characters:result,liked_characters:liked_characters,unliked_characters:unliked_characters,user_status:@user_status})
+  liked_characters = liked_characters(session[:id])
+  slim(:"ranks/index", locals:{characters:result,liked_characters:liked_characters,user_status:@user_status})
 
 end
 
@@ -126,10 +126,8 @@ end
 post('/like/:id') do
   status = 0
   id = params[:id].to_i
-  
-  like(id)
-  session[:liked_characters] ||= []
-  session[:liked_characters] << id unless session[:liked_characters].include?(id)
+  user_likes(session[:id])
+  like(id,session[:id])
   redirect('/ranks')
 
 end
@@ -137,9 +135,7 @@ end
 post('/unlike/:id') do
   status = 1
   id = params[:id].to_i
-  unlike(id)
-  session[:unliked_characters] ||= []
-  session[:unliked_characters] << id unless session[:unliked_characters].include?(id)
+  unlike(id,session[:id])
   redirect('/ranks')
 
 end
