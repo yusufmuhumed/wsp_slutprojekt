@@ -90,7 +90,7 @@ get('/showlogout') do
   slim(:logout)
 end
 
-post("/locked/new") do #fel
+post("/locked") do 
   username= params[:username]
   password= params[:password]
   email= params[:email]
@@ -199,7 +199,7 @@ get('/lists/see-more') do
   slim(:"/lists/see-more", locals:{results:results,user_status:@user_status})
 end
 
-post('/list/add') do #fel
+post('/lists') do 
   name = params["name"]
   userId = session[:id]
   add_character_to_list(name,userId)

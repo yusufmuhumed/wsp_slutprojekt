@@ -8,8 +8,9 @@ body class="search-result-container"
 
 
 
-  - if results.empty?
+  - if results == nil 
     p No results found
+    a href="/search/start" back to search bar  
   - else
     div class="search-results"
       - results.each do |result|

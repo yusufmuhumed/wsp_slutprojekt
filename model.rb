@@ -79,6 +79,19 @@ module Model
 
 
    def register(username,password,email,password_confirm)
+      if username == "" 
+         return "you need to fill in a username to register your user"
+      end
+      
+      if email == ""
+         return "you need to fill in your email address to register your user"
+
+      end
+      
+      if password == ""
+         return "you need to fill in a password to register your user"
+
+      end
 
       if password == password_confirm
          password_digest= BCrypt::Password.create(password)
