@@ -17,7 +17,7 @@ div class="lists-container"
                 - results.each do |result|  
                     
                     li class="character-list"
-                        a href="#" #{result['name']}
+                        a href="/search/#{result['name']}" #{result['name']}
                         form action="/delete/#{result['name']}" method="post"
                             input type="submit" value="Remove character" 
                     

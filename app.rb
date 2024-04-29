@@ -13,10 +13,19 @@ include Model
 before do
   restricted_paths = ['/access', '/admin', '/ranks', '/search/start', '/lists','/admin_services']
   if (session[:id] ==  nil && restricted_paths.include?(request.path_info))
-    flash[:error]= "You need to log in to see this"
+    flash[:error]= "You need to log in before using the website"
     redirect('/login')
   end
 end
+
+before('/showlogout') do
+  if (session[:id] ==  nil)
+    flash[:error] = "You need to be logged in to be able to log out"
+    redirect('/login')
+  end
+
+end
+
 
 
 
@@ -30,6 +39,7 @@ end
 # Display Login
 #
 get('/login') do
+  session[:id] = nil
   slim(:"locked/login")
 end
 
@@ -80,19 +90,24 @@ get('/showlogout') do
   slim(:logout)
 end
 
-post("/locked/new") do
+post("/locked/new") do #fel
   username= params[:username]
   password= params[:password]
   email= params[:email]
   password_confirm= params[:password_comfirm]
-
-  if register(username,password,email,password_confirm) 
+  p "hello"
+  if register(username,password,email,password_confirm).is_a?(Integer)
     redirect('/access')
   else
+    flash[:error] = register(username,password,email,password_confirm)
+    p "hello"
+    p flash[:error]
     redirect('/')
   end
-
-  
+#problem: kan inte regristera till hemsidan och sidan visar inte valideringsmeddalnden när man regristerar
+#checka update och delete ifall det är rätt användare som kan delete och update 
+#yardoc
+#valedring 
 end
 
 
@@ -184,7 +199,7 @@ get('/lists/see-more') do
   slim(:"/lists/see-more", locals:{results:results,user_status:@user_status})
 end
 
-post('/list/add') do
+post('/list/add') do #fel
   name = params["name"]
   userId = session[:id]
   add_character_to_list(name,userId)

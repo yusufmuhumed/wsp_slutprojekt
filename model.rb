@@ -1,5 +1,6 @@
 require "sqlite3"
 require "bcrypt"
+require 'sinatra/flash'
 
 module Model
    def connect_to_db(path)
@@ -52,12 +53,7 @@ module Model
    end
 
 
-   # username="yusuf"
-   # user_status= user_admin("yusuf")
-   # p user_status
-
-   # p user_status["admin"]
-
+   
    def name_already_in_list(nameId,userId)
       db = SQLite3::Database.new('db/onepiece.db')
       result = db.execute("SELECT UsersId FROM CharactersUsersRelations WHERE CharactersId =? AND UsersId=?",nameId,userId)
@@ -83,14 +79,42 @@ module Model
 
 
    def register(username,password,email,password_confirm)
+
       if password == password_confirm
          password_digest= BCrypt::Password.create(password)
-         db = SQLite3::Database.new('db/onepiece.db')
-         db.execute("INSERT INTO users (user_name,user_pwd,user_mail) VALUES(?,?,?)",username,password_digest,email)
-         return true
+         db =SQLite3::Database.new('db/onepiece.db')
+         result = db.execute("SELECT id FROM users WHERE user_name=? ",username).flatten
+         result2 = db.execute("SELECT id FROM users WHERE user_mail=?",email).flatten
+         p result
+         p result2
+         if result == [] && result2 == []
+            db.execute("INSERT INTO users (user_name,user_pwd,user_mail) VALUES(?,?,?)",username,password_digest,email)
+            session[:id] = db.execute("SELECT id FROM users WHERE user_name=? ",username).first[0]
+            p session[:id]
+            return session[:id]
+
+         elsif result =! nil && result2 =! nil
+            message= "username or email already exist. Please find another username"
+            p message
+            return "username or email already exist. Please find another username"
+         elsif result =! nil && result2.empty?
+            message= "username already exist. Please find another username"
+            p message
+
+            return "username already exist. Please find another username"
+
+         else
+            p message
+            message = "email already in use. Please use another email to register a new user."
+            return message
+
+         end
+
+
    
       else
-         return false
+         message = "password not matching"
+         return message
       
       end
    end

@@ -41,7 +41,8 @@ body id="login-body"
                     p already have an account? 
                     a href="/login" class="register-link" id="register-link" Login
 
-
+                - if flash[:error]
+                    p.error_login = flash[:error]
 
 
 
