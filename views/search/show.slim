@@ -1,24 +1,33 @@
-div class="character_show_container"
-    div class="background_img"
 
-    div class="character-content"
-        img class="img_cover" src="/img/one_piece_images/#{result['name']}.jpg" alt="charcter image"
-        div class="character_content_header"
-            div class="character_name"
-                h2 = result['name']
-            div class="character_crew"
-                h3 = "Crew : Whitebeard pirates"
-            div class="character_year"
-                p first apperance #{result['year']}
-            div class=""
-                - if @user_status ==1
-                    form action="/ranks/delete/#{result['name']}" method="post"
-                            input type="submit" value="Remove character"
-                    a href="/ranks/#{result['id']}/edit" edit character
-                    
+-if result== nil
+    div class="no_character_result"
+        h2  error : no search input
+        a href="/search/start" back to searchbar
 
-    div class="character-content-body"
-        h2 Key Notes:
-        div class="character-notes"
-            p First Character apperance in the manga was chapter #{result['chapter']} and in the anime, episode #{result['episode']}.  #{result['note']}
-            a href="/search/" back to search 
+-else
+
+
+    div class="character_show_container"
+        div class="background_img"
+
+        div class="character-content"
+            img class="img_cover" src="/img/one_piece_images/#{result['name']}.jpg" alt="charcter image"
+            div class="character_content_header"
+                div class="character_name"
+                    h2 = result['name']
+                div class="character_crew"
+                    h3 = "Crew : Whitebeard pirates"
+                div class="character_year"
+                    p first apperance #{result['year']}
+                div class=""
+                    - if @user_status ==1
+                        form action="/ranks/delete/#{result['name']}" method="post"
+                                input type="submit" value="Remove character"
+                        a href="/ranks/#{result['id']}/edit" edit character
+                        
+
+        div class="character-content-body"
+            h2 Key Notes:
+            div class="character-notes"
+                p First Character apperance in the manga was chapter #{result['chapter']} and in the anime, episode #{result['episode']}.  #{result['note']}
+                a href="/search/" back to search 

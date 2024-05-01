@@ -93,6 +93,9 @@ module Model
 
       end
 
+      if password.length() <= 7
+         return "password needs to be 7 or more letters. Please fill in a different password."
+      end
       if password == password_confirm
          password_digest= BCrypt::Password.create(password)
          db =SQLite3::Database.new('db/onepiece.db')
@@ -233,8 +236,8 @@ module Model
 
    def edit_character(name,chapter,episode,year,note,bounnty,id)
       db = connect_to_db('db/onepiece.db')
-      db.execute("UPDATE Characters name=?, chapter=?, episode=?, year=?, note=?, bounty=?, likes=?
-      WHERE  id=?",name,chapter,episode,year,note,bounty,0,id)
+      db.execute("UPDATE Characters name=?, chapter=?, episode=?, year=?, note=?, bounty=?
+      WHERE  id=?",name,chapter,episode,year,note,bounty,id)
    end
 
 

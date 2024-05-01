@@ -235,10 +235,10 @@ post('/admin_service/') do
   redirect('/admin_service/new')
 end
 
-post('/delete/:name') do
+post('/ranks/delete/:name') do
   name = params[:name]
   delete_character(name)
-  redirect("/ranks/index")
+  redirect("/ranks")
 end
 
 get("/ranks/:id/edit") do

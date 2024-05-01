@@ -1035,3 +1035,7 @@
   box-shadow: 0 0 30px rgba(0,0,0,.5);
   background-color: transparent;
 }
+
+.no_character_result{
+  margin-top: 100px;
+}
