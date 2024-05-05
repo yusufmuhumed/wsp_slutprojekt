@@ -234,10 +234,13 @@ module Model
 
 
 
-   def edit_character(name,chapter,episode,year,note,bounnty,id)
+   def edit_character(name,chapter,episode,year,note,bounty,id)
       db = connect_to_db('db/onepiece.db')
-      db.execute("UPDATE Characters name=?, chapter=?, episode=?, year=?, note=?, bounty=?
+      db.execute("UPDATE Characters SET name = ?, chapter = ?, episode = ?, year = ?, note = ?, Bounty = ?    
       WHERE  id=?",name,chapter,episode,year,note,bounty,id)
+      p "after update:"
+      r= db.execute("SELECT * FROM Characters WHERE id=?",id)
+      p r
    end
 
 

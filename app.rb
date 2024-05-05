@@ -243,9 +243,11 @@ end
 
 get("/ranks/:id/edit") do
   @user_status = session[:user_status]
-  id = params[:id]
-  result = character(id)
-  
+  id_character = params[:id]
+  session[:id_character] = id_character
+  result = character(id_character)
+  p "id in edit:"
+  p id_character
   slim(:'/ranks/edit',locals:{result:result,user_status:@user_status})
 
 end
@@ -258,11 +260,9 @@ post("/ranks/:id/update") do
   year = params[:year]
   note = params[:note]
   bounty = params[:bounty]
-  id = name_to_id2(@name)
-  p @name
-  p id
-  edit_character(name,chapter,episode,year,note,bounty,id)
-  redirect('/ranks/:id')
+  id_character = session[:id_character]  
+  edit_character(name,chapter,episode,year,note,bounty,id_character)
+  redirect('/ranks')
 end
 
 
