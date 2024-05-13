@@ -18,7 +18,7 @@ div class="lists-container"
                     
                     li class="character-list"
                         a href="/search/#{result['name']}" #{result['name']}
-                        form action="/delete/#{result['name']}" method="post"
+                        form action="/lists/#{result['name']}/delete" method="post"
                             input type="submit" value="Remove character" 
                     
                     - i+=1

@@ -43,3 +43,5 @@ div class="search-wrapper"
                 button  class="btn"  type="submit" add character
 
 
+    - if flash[:notice]
+           p.error_login = flash[:notice]

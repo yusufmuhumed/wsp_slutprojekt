@@ -23,11 +23,14 @@ main class="main_list"
                         - if liked_characters.include?(character['id']) 
                            span class="like-button"
                             <ion-icon name="heart"></ion-icon>
-                           form class="unlike-form" action="/unlike/#{character['id']}" method="post"
+                           form class="unlike-form" action="/ranks/unlike/#{character['id']}" method="post"
                                 input type="submit" value="Unlike"
                         -else
-                            form class="like-form" action="/like/#{character['id']}" method="post"
+                            form class="like-form" action="/ranks/like/#{character['id']}" method="post"
                                 input type="submit" value="Like"
                            
 
-                
+- if flash[:admin]
+           p.notice = flash[:admin]
+
+script src="../public/js/app.js" 

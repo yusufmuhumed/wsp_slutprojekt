@@ -20,7 +20,7 @@
                     p first apperance #{result['year']}
                 div class=""
                     - if @user_status ==1
-                        form action="/ranks/delete/#{result['name']}" method="post"
+                        form action="/ranks/#{result['id']}/delete" method="post"
                                 input type="submit" value="Remove character"
                         a href="/ranks/#{result['id']}/edit" edit character
                         
